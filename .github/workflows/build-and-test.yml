@@ -113,13 +113,16 @@ jobs:
     needs: [ swig_Linux ]
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'pull_request' }}
+    strategy:
+      matrix:
+        py-version: [3.6, 3.7, 3.8, 3.9]
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.6
+          python-version: ${{ matrix.py-verison }}
       - run: |
           python --version
           pip --version
@@ -651,13 +654,16 @@ jobs:
     needs: [ swig_macOS ]
     runs-on: macos-10.15
     if: ${{ github.event_name == 'pull_request' }}
+    strategy:
+      matrix:
+        py-version: [3.6.8]
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - uses: ./.github/actions/install-python-upstream
         with:
-          version: 3.6.8
+          version: ${{ matrix.py-version }}
       - run: |
           python --version
           pip --version
@@ -673,7 +679,7 @@ jobs:
       - id: get_numpy
         uses: ./.github/actions/numpy_vers
         with:
-          pyver: 3.6.8
+          pyver: ${{ matrix.py-version }}
       - name: Make decoder package
         run: |
           NUMPY_BUILD_VERSION=${{ steps.get_numpy.outputs.build_version }} \
