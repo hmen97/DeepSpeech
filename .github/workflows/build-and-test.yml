@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - add-pycoverage
 env:
   # Shared variables
   CI_TASK_DIR: ${{ github.workspace }}
