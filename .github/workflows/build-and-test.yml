@@ -115,7 +115,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     strategy:
       matrix:
-        py-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.6, 3.7, 3.8, 3.9]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -138,7 +138,7 @@ jobs:
       - id: get_numpy
         uses: ./.github/actions/numpy_vers
         with:
-          pyver: 3.6
+          pyver: ${{ matrix.python-version }}
       - name: Make decoder package
         run: |
           NUMPY_BUILD_VERSION=${{ steps.get_numpy.outputs.build_version }} \
@@ -160,13 +160,14 @@ jobs:
     strategy:
       matrix:
         bitrate: ["8k", "16k"]
+        python-version: [3.6, 3.7, 3.8, 3.9]
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.6
+          python-version: ${{ matrix.python-version }}
       - uses: actions/download-artifact@v2
         with:
           name: "ds_ctcdecoder-Linux-test.whl"
@@ -656,7 +657,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     strategy:
       matrix:
-        python-version: [3.6.8, 3.7.9, 3.8.8, 3.9.2]
+        python-version: [3.6.13, 3.7.10, 3.8.10, 3.9.4]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -701,13 +702,14 @@ jobs:
     strategy:
       matrix:
         bitrate: ["8k", "16k"]
+        python-version: [3.6.13, 3.7.10, 3.8.10, 3.9.4]
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.6
+          python-version: ${{ matrix.python-version }}
       - uses: actions/download-artifact@v2
         with:
           name: "ds_ctcdecoder-macOS-test.whl"
@@ -856,7 +858,7 @@ jobs:
     strategy:
       matrix:
         build-flavor: ["tf", "tflite"]
-        python-version: [3.6.8, 3.7.9, 3.8.8, 3.9.2]
+        python-version: [3.6.13, 3.7.10, 3.8.10, 3.9.4]
     steps:
       - uses: actions/checkout@v2
         with:
