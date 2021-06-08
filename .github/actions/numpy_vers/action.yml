@@ -17,8 +17,8 @@ runs:
     - id: numpy
       run: |
         set -ex
-        NUMPY_BUILD_VERSION="==1.7.0"
-        NUMPY_DEP_VERSION=">=1.7.0"
+        NUMPY_BUILD_VERSION="==1.16.0"
+        NUMPY_DEP_VERSION=">=1.16.0"
 
         OS=$(uname -s)
         ARCH=$(uname -m)
@@ -29,6 +29,7 @@ runs:
                     3.6*)
                         NUMPY_BUILD_VERSION="==1.19.2"
                         NUMPY_DEP_VERSION=">=1.19.2"
+                    ;;
                     3.7*)
                         NUMPY_BUILD_VERSION="==1.19.2"
                         NUMPY_DEP_VERSION=">=1.19.2"
