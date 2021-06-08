@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches:
-      - add-pycoverage
+      - master
 env:
   # Shared variables
   CI_TASK_DIR: ${{ github.workspace }}
@@ -656,14 +656,14 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     strategy:
       matrix:
-        py-version: [3.6.8]
+        python-version: [3.6.8]
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - uses: ./.github/actions/install-python-upstream
         with:
-          version: ${{ matrix.py-version }}
+          version: ${{ matrix.python-version }}
       - run: |
           python --version
           pip --version
@@ -679,7 +679,7 @@ jobs:
       - id: get_numpy
         uses: ./.github/actions/numpy_vers
         with:
-          pyver: ${{ matrix.py-version }}
+          pyver: ${{ matrix.python-version }}
       - name: Make decoder package
         run: |
           NUMPY_BUILD_VERSION=${{ steps.get_numpy.outputs.build_version }} \
