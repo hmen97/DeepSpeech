@@ -29,6 +29,7 @@ runs:
                     3.6*)
                         NUMPY_BUILD_VERSION="==1.19.2"
                         NUMPY_DEP_VERSION=">=1.19.2"
+                    ;;
                     3.7*)
                         NUMPY_BUILD_VERSION="==1.19.2"
                         NUMPY_DEP_VERSION=">=1.19.2,<=1.19.2"
