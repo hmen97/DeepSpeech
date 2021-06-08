@@ -48,8 +48,8 @@ runs:
             Darwin:*)
                 case "${{ inputs.pyver }}" in
                     3.6*)
-                        NUMPY_BUILD_VERSION="==1.19.0"
-                        NUMPY_DEP_VERSION=">=1.19.0,<=1.19.0"
+                        NUMPY_BUILD_VERSION="==1.13.3"
+                        NUMPY_DEP_VERSION=">=1.13.3"
                     ;;
                     3.7*)
                         NUMPY_BUILD_VERSION="==1.20.0"
