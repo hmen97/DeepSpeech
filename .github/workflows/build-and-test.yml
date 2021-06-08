@@ -661,7 +661,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     strategy:
       matrix:
-        python-version: [3.6.8, 3.7.9]
+        python-version: [3.6.8, 3.7.9, 3.8.8, 3.9.2]
     steps:
       - uses: actions/checkout@v2
         with:
