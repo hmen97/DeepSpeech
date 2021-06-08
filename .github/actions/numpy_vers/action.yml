@@ -27,12 +27,12 @@ runs:
             Linux:x86_64)
                 case "${{ inputs.pyver }}" in
                     3.6*)
-                        NUMPY_BUILD_VERSION="==1.19.2"
+                        NUMPY_BUILD_VERSION="==1.19.2   "
                         NUMPY_DEP_VERSION=">=1.19.2"
                     ;;
                     3.7*)
-                        NUMPY_BUILD_VERSION="==1.19.2"
-                        NUMPY_DEP_VERSION=">=1.19.2,<=1.19.2"
+                        NUMPY_BUILD_VERSION="==1.19.3"
+                        NUMPY_DEP_VERSION=">=1.19.3"
                     ;;
                     3.8*)
                         NUMPY_BUILD_VERSION="==1.19.2"

@@ -21,51 +21,51 @@ defaults:
     shell: bash
 jobs:
   # Linux jobs
-  swig_Windows_crosscompiled:
-    name: "Lin|Build SWIG for Windows"
-    runs-on: ubuntu-20.04
-    env:
-      swig_hash: "90cdbee6a69d13b39d734083b9f91069533b0d7b"
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          repository: "swig/swig"
-          ref: ${{ env.swig_hash }}
-      - run: |
-          mkdir -p build-static/
-      - uses: actions/cache@v2
-        id: swig-build-cache
-        with:
-          path: build-static/
-          key: swig-win-3-${{ env.swig_hash }}
-      - run: |
-          sudo apt-get install -y --no-install-recommends autoconf automake bison build-essential mingw-w64
-        if: steps.swig-build-cache.outputs.cache-hit != 'true'
-      - run: |
-          curl -sSL https://ftp.pcre.org/pub/pcre/pcre-8.43.tar.gz > pcre-8.43.tar.gz
-        if: steps.swig-build-cache.outputs.cache-hit != 'true'
-      - run: |
-          ./Tools/pcre-build.sh --host=x86_64-w64-mingw32
-        if: steps.swig-build-cache.outputs.cache-hit != 'true'
-      - run: |
-          sh autogen.sh
-          CFLAGS="-static-libgcc -static-libstdc++" \
-          CXXFLAGS="-static-libgcc -static-libstdc++" \
-          ./configure \
-            --host=x86_64-w64-mingw32 \
-            --prefix=`pwd`/build-static/ \
-            --program-prefix=ds-
-        if: steps.swig-build-cache.outputs.cache-hit != 'true'
-      - run: |
-          make -j
-        if: steps.swig-build-cache.outputs.cache-hit != 'true'
-      - run: |
-          make install
-        if: steps.swig-build-cache.outputs.cache-hit != 'true'
-      - uses: actions/upload-artifact@v2
-        with:
-          name: ${{ github.job }}
-          path: ${{ github.workspace }}/build-static/
+  # swig_Windows_crosscompiled:
+  #   name: "Lin|Build SWIG for Windows"
+  #   runs-on: ubuntu-20.04
+  #   env:
+  #     swig_hash: "90cdbee6a69d13b39d734083b9f91069533b0d7b"
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         repository: "swig/swig"
+  #         ref: ${{ env.swig_hash }}
+  #     - run: |
+  #         mkdir -p build-static/
+  #     - uses: actions/cache@v2
+  #       id: swig-build-cache
+  #       with:
+  #         path: build-static/
+  #         key: swig-win-3-${{ env.swig_hash }}
+  #     - run: |
+  #         sudo apt-get install -y --no-install-recommends autoconf automake bison build-essential mingw-w64
+  #       if: steps.swig-build-cache.outputs.cache-hit != 'true'
+  #     - run: |
+  #         curl -sSL https://ftp.pcre.org/pub/pcre/pcre-8.43.tar.gz > pcre-8.43.tar.gz
+  #       if: steps.swig-build-cache.outputs.cache-hit != 'true'
+  #     - run: |
+  #         ./Tools/pcre-build.sh --host=x86_64-w64-mingw32
+  #       if: steps.swig-build-cache.outputs.cache-hit != 'true'
+  #     - run: |
+  #         sh autogen.sh
+  #         CFLAGS="-static-libgcc -static-libstdc++" \
+  #         CXXFLAGS="-static-libgcc -static-libstdc++" \
+  #         ./configure \
+  #           --host=x86_64-w64-mingw32 \
+  #           --prefix=`pwd`/build-static/ \
+  #           --program-prefix=ds-
+  #       if: steps.swig-build-cache.outputs.cache-hit != 'true'
+  #     - run: |
+  #         make -j
+  #       if: steps.swig-build-cache.outputs.cache-hit != 'true'
+  #     - run: |
+  #         make install
+  #       if: steps.swig-build-cache.outputs.cache-hit != 'true'
+  #     - uses: actions/upload-artifact@v2
+  #       with:
+  #         name: ${{ github.job }}
+  #         path: ${{ github.workspace }}/build-static/
   swig_Linux:
     name: "Lin|Build SWIG"
     runs-on: ubuntu-20.04
@@ -220,24 +220,24 @@ jobs:
   #       with:
   #         name: "test-checkpoint.${{ matrix.bitrate }}.zip"
   #         path: ${{ github.workspace }}/tmp/checkpoint.tar.xz
-  tensorflow_opt-Linux:
-    name: "Lin|Check TensorFlow cache"
-    runs-on: ubuntu-20.04
-    outputs:
-      status: ${{ steps.check_artifact_exists.outputs.status }}
-      cache_key: ${{ steps.get_cache_key.outputs.key }}
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-      - id: get_cache_key
-        uses: ./.github/actions/get_cache_key
-        with:
-          extras: "2"
-      - id: check_artifact_exists
-        uses: ./.github/actions/check_artifact_exists
-        with:
-          name: ${{ steps.get_cache_key.outputs.key }}
+  # tensorflow_opt-Linux:
+  #   name: "Lin|Check TensorFlow cache"
+  #   runs-on: ubuntu-20.04
+  #   outputs:
+  #     status: ${{ steps.check_artifact_exists.outputs.status }}
+  #     cache_key: ${{ steps.get_cache_key.outputs.key }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 1
+  #     - id: get_cache_key
+  #       uses: ./.github/actions/get_cache_key
+  #       with:
+  #         extras: "2"
+  #     - id: check_artifact_exists
+  #       uses: ./.github/actions/check_artifact_exists
+  #       with:
+  #         name: ${{ steps.get_cache_key.outputs.key }}
   #success
   # build-tensorflow-Linux:
   #   name: "Lin|Build TensorFlow (opt)"
