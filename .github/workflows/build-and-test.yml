@@ -657,7 +657,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     strategy:
       matrix:
-        python-version: [3.6.13, 3.7.10, 3.8.10, 3.9.4]
+        python-version: [3.6.8, 3.7.9, 3.8.8, 3.9.2]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -702,7 +702,7 @@ jobs:
     strategy:
       matrix:
         bitrate: ["8k", "16k"]
-        python-version: [3.6.13, 3.7.10, 3.8.10, 3.9.4]
+        python-version: [3.6.8, 3.7.9, 3.8.8, 3.9.2]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -858,7 +858,7 @@ jobs:
     strategy:
       matrix:
         build-flavor: ["tf", "tflite"]
-        python-version: [3.6.13, 3.7.10, 3.8.10, 3.9.4]
+        python-version: [3.6.8, 3.7.9, 3.8.8, 3.9.2]
     steps:
       - uses: actions/checkout@v2
         with:
