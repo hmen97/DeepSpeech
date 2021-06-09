@@ -1,9 +1,9 @@
 name: "Builds and tests"
 on:
   pull_request:
-  push:
-    branches:
-      - master
+  # push:
+  #   branches:
+  #     - master
 env:
   # Shared variables
   CI_TASK_DIR: ${{ github.workspace }}
@@ -220,25 +220,24 @@ jobs:
         with:
           name: "test-checkpoint.${{ matrix.bitrate }}.zip"
           path: ${{ github.workspace }}/tmp/checkpoint.tar.xz
-  # tensorflow_opt-Linux:
-  #   name: "Lin|Check TensorFlow cache"
-  #   runs-on: ubuntu-20.04
-  #   outputs:
-  #     status: ${{ steps.check_artifact_exists.outputs.status }}
-  #     cache_key: ${{ steps.get_cache_key.outputs.key }}
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         fetch-depth: 1
-  #     - id: get_cache_key
-  #       uses: ./.github/actions/get_cache_key
-  #       with:
-  #         extras: "2"
-  #     - id: check_artifact_exists
-  #       uses: ./.github/actions/check_artifact_exists
-  #       with:
-  #         name: ${{ steps.get_cache_key.outputs.key }}
-  #success
+  tensorflow_opt-Linux:
+    name: "Lin|Check TensorFlow cache"
+    runs-on: ubuntu-20.04
+    outputs:
+      status: ${{ steps.check_artifact_exists.outputs.status }}
+      cache_key: ${{ steps.get_cache_key.outputs.key }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - id: get_cache_key
+        uses: ./.github/actions/get_cache_key
+        with:
+          extras: "2"
+      - id: check_artifact_exists
+        uses: ./.github/actions/check_artifact_exists
+        with:
+          name: ${{ steps.get_cache_key.outputs.key }}
   # build-tensorflow-Linux:
   #   name: "Lin|Build TensorFlow (opt)"
   #   needs: tensorflow_opt-Linux
