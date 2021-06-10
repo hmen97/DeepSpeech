@@ -152,7 +152,7 @@ jobs:
           path: ${{ github.workspace }}/native_client/ctcdecode/dist/*.whl
       - run: |
           make -C native_client/ctcdecode clean-keep-third-party
-  train-test-model-Linux:
+  #train-test-model-Linux:
     name: "Lin|Train a test model"
     needs: [ "build-ctc-decoder-Linux" ]
     runs-on: ubuntu-20.04
@@ -219,7 +219,7 @@ jobs:
         with:
           name: "test-checkpoint.${{ matrix.bitrate }}.zip"
           path: ${{ github.workspace }}/tmp/checkpoint.tar.xz
-  tensorflow_opt-Linux:
+  #tensorflow_opt-Linux:
     name: "Lin|Check TensorFlow cache"
     runs-on: ubuntu-20.04
     outputs:
@@ -237,7 +237,7 @@ jobs:
         uses: ./.github/actions/check_artifact_exists
         with:
           name: ${{ steps.get_cache_key.outputs.key }}
-  build-tensorflow-Linux:
+  #build-tensorflow-Linux:
     name: "Lin|Build TensorFlow (opt)"
     needs: tensorflow_opt-Linux
     runs-on: ubuntu-20.04
@@ -265,7 +265,7 @@ jobs:
           name: ${{ needs.tensorflow_opt-Linux.outputs.cache_key }}
           path: ${{ github.workspace }}/artifacts/home.tar.xz
         if: needs.tensorflow_opt-Linux.outputs.status == 'missing'
-  build-lib_Linux:
+  #build-lib_Linux:
     name: "Lin|Build libdeepspeech+client"
     runs-on: ubuntu-20.04
     needs: [ build-tensorflow-Linux, tensorflow_opt-Linux ]
@@ -306,7 +306,7 @@ jobs:
         with:
           name: "libdeepspeech.${{ matrix.build-flavor }}.zip"
           path: ${{ github.workspace }}/artifacts/libdeepspeech.zip
-  build-python-Linux:
+  #build-python-Linux:
     name: "Lin|Build Python bindings"
     runs-on: ubuntu-20.04
     needs: [ build-lib_Linux, swig_Linux ]
@@ -352,7 +352,7 @@ jobs:
         with:
           name: "deepspeech-${{ matrix.build-flavor }}-${{ matrix.python-version }}-Linux.whl"
           path: ${{ github.workspace }}/wheels/*.whl
-  build-nodejs-Linux:
+  #build-nodejs-Linux:
     name: "Lin|Build NodeJS and ElectronJS"
     runs-on: ubuntu-20.04
     needs: [ build-lib_Linux, swig_Linux ]
@@ -406,7 +406,7 @@ jobs:
         with:
           name: "deepspeech_intermediate-${{ matrix.build-flavor }}-Linux.tgz"
           path: ${{ github.workspace }}/native_client/javascript/deepspeech-*.tgz
-  test-cpp-Linux:
+  #test-cpp-Linux:
     name: "Lin|Test C++ binary"
     runs-on: ubuntu-20.04
     needs: [ build-lib_Linux, train-test-model-Linux ]
@@ -447,7 +447,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-py-Linux:
+  #test-py-Linux:
     name: "Lin|Test Python bindings"
     runs-on: ubuntu-20.04
     needs: [ build-python-Linux, train-test-model-Linux ]
@@ -494,7 +494,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-nodejs-Linux:
+  #test-nodejs-Linux:
     name: "Lin|Test NodeJS bindings"
     runs-on: ubuntu-20.04
     needs: [ build-nodejs-Linux, train-test-model-Linux ]
@@ -550,7 +550,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-electronjs-Linux:
+  #test-electronjs-Linux:
     name: "Lin|Test ElectronJS bindings"
     runs-on: ubuntu-20.04
     needs: [ build-nodejs-Linux, train-test-model-Linux ]
@@ -693,7 +693,7 @@ jobs:
           path: ${{ github.workspace }}/native_client/ctcdecode/dist/*.whl
       - run: |
           make -C native_client/ctcdecode clean-keep-third-party
-  train-test-model-macOS:
+  #train-test-model-macOS:
     name: "Mac|Train a test model"
     needs: [ "build-ctc-decoder-macos" ]
     runs-on: macos-10.15
@@ -760,7 +760,7 @@ jobs:
         with:
           name: "test-checkpoint.${{ matrix.bitrate }}.zip"
           path: ${{ github.workspace }}/tmp/checkpoint.tar.xz
-  tensorflow_opt-macOS:
+  #tensorflow_opt-macOS:
     name: "Mac|Check TensorFlow cache"
     runs-on: ubuntu-20.04
     outputs:
@@ -778,7 +778,7 @@ jobs:
         uses: ./.github/actions/check_artifact_exists
         with:
           name: ${{ steps.get_cache_key.outputs.key }}
-  build-tensorflow-macOS:
+  #build-tensorflow-macOS:
     name: "Mac|Build TensorFlow (opt)"
     needs: tensorflow_opt-macOS
     runs-on: macos-10.15
@@ -807,7 +807,7 @@ jobs:
           name: ${{ needs.tensorflow_opt-macOS.outputs.cache_key }}
           path: ${{ github.workspace }}/artifacts/home.tar.xz
         if: needs.tensorflow_opt-macOS.outputs.status == 'missing'
-  build-lib_macOS:
+  #build-lib_macOS:
     name: "Mac|Build libdeepspeech+client"
     runs-on: macos-10.15
     needs: [ build-tensorflow-macOS, tensorflow_opt-macOS ]
@@ -849,7 +849,7 @@ jobs:
         with:
           name: "libdeepspeech.${{ matrix.build-flavor }}.zip"
           path: ${{ github.workspace }}/artifacts/libdeepspeech.zip
-  build-python-macOS:
+  #build-python-macOS:
     name: "Mac|Build python bindings"
     runs-on: macos-10.15
     needs: [ build-lib_macOS, swig_macOS ]
@@ -899,7 +899,7 @@ jobs:
         with:
           name: "deepspeech-${{ matrix.build-flavor }}-${{ matrix.python-version }}-macOS.whl"
           path: ${{ github.workspace }}/wheels/*.whl
-  build-nodejs-macOS:
+  #build-nodejs-macOS:
     name: "Mac|Build NodeJS and ElectronJS"
     runs-on: macos-10.15
     needs: [ build-lib_macOS, swig_macOS ]
@@ -953,7 +953,7 @@ jobs:
         with:
           name: "deepspeech_intermediate-${{ matrix.build-flavor }}-macOS.tgz"
           path: ${{ github.workspace }}/native_client/javascript/deepspeech-*.tgz
-  test-cpp-macOS:
+  #test-cpp-macOS:
     name: "Mac|Test C++ binary"
     runs-on: macos-10.15
     needs: [ build-lib_macOS, train-test-model-macOS ]
@@ -994,7 +994,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-py-macOS:
+  #test-py-macOS:
     name: "Mac|Test Python bindings"
     runs-on: macos-10.15
     needs: [ build-python-macOS, train-test-model-macOS ]
@@ -1039,7 +1039,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-nodejs-macOS:
+  #test-nodejs-macOS:
     name: "Mac|Test NodeJS bindings"
     runs-on: macos-10.15
     needs: [ build-nodejs-macOS, train-test-model-macOS ]
@@ -1093,7 +1093,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-electronjs-macOS:
+  #test-electronjs-macOS:
     name: "Mac|Test ElectronJS bindings"
     runs-on: macos-10.15
     needs: [ build-nodejs-macOS, train-test-model-macOS ]
@@ -1199,7 +1199,7 @@ jobs:
           path: ${{ github.workspace }}/native_client/ctcdecode/dist/*.whl
       - run: |
           make -C native_client/ctcdecode clean-keep-third-party
-  tensorflow_opt-Windows:
+  #tensorflow_opt-Windows:
     name: "Win|Check TensorFlow cache"
     runs-on: ubuntu-20.04
     outputs:
@@ -1217,7 +1217,7 @@ jobs:
         uses: ./.github/actions/check_artifact_exists
         with:
           name: ${{ steps.get_cache_key.outputs.key }}
-  build-tensorflow-Windows:
+  #build-tensorflow-Windows:
     name: "Win|Build TensorFlow (opt)"
     needs: tensorflow_opt-Windows
     runs-on: windows-2019
@@ -1262,7 +1262,7 @@ jobs:
           name: ${{ needs.tensorflow_opt-Windows.outputs.cache_key }}
           path: ${{ github.workspace }}/artifacts/home.tar.xz
         if: needs.tensorflow_opt-Windows.outputs.status == 'missing'
-  build-lib_Windows:
+  #build-lib_Windows:
     name: "Win|Build libdeepspeech+client"
     runs-on: windows-2019
     needs: [build-tensorflow-Windows, tensorflow_opt-Windows]
@@ -1314,7 +1314,7 @@ jobs:
         with:
           name: "libdeepspeech.${{ matrix.build-flavor }}.zip"
           path: ${{ github.workspace }}/artifacts/libdeepspeech.zip
-  build-python-Windows:
+  #build-python-Windows:
     name: "Win|Build Python bindings"
     runs-on: windows-2019
     needs: [build-lib_Windows, swig_Windows_crosscompiled]
@@ -1376,7 +1376,7 @@ jobs:
         with:
           name: "deepspeech-${{ matrix.build-flavor }}-${{ matrix.python-version }}-Windows.whl"
           path: ${{ github.workspace }}/wheels/*.whl
-  build-nodejs-Windows:
+  #build-nodejs-Windows:
     name: "Win|Build NodeJS/ElectronJS"
     runs-on: windows-2019
     needs: [build-lib_Windows, swig_Windows_crosscompiled]
@@ -1442,7 +1442,7 @@ jobs:
         with:
           name: "deepspeech_intermediate-${{ matrix.build-flavor }}-Windows.tgz"
           path: ${{ github.workspace }}/native_client/javascript/deepspeech-*.tgz
-  test-cpp-Windows:
+  #test-cpp-Windows:
     name: "Win|Test C++ binary"
     runs-on: windows-2019
     needs: [build-lib_Windows, train-test-model-Linux]
@@ -1490,7 +1490,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: "16k"
           model-kind: ""
-  test-py-Windows:
+  #test-py-Windows:
     name: "Win|Test Python bindings"
     runs-on: windows-2019
     needs: [ build-python-Windows, train-test-model-Linux ]
@@ -1547,7 +1547,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-nodejs-Windows:
+  #test-nodejs-Windows:
     name: "Win|Test NodeJS bindings"
     runs-on: windows-2019
     needs: [ build-nodejs-Windows, train-test-model-Linux ]
@@ -1612,7 +1612,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-electronjs-Windows:
+  #test-electronjs-Windows:
     name: "Win|Test ElectronJS bindings"
     runs-on: windows-2019
     needs: [ build-nodejs-Windows, train-test-model-Linux ]
@@ -1681,7 +1681,7 @@ jobs:
           model-kind: ${{ matrix.models }}
         timeout-minutes: 5
   # Shared jobs (multi-platform dependencies)
-  repackage-nodejs-allplatforms:
+  #repackage-nodejs-allplatforms:
     name: "Repackage NodeJS / ElectronJS for multiplatforms"
     runs-on: ubuntu-20.04
     needs: [build-nodejs-macOS, build-nodejs-Windows, build-nodejs-Linux, build-nodejs-LinuxArmv7, build-nodejs-LinuxAarch64]
@@ -1737,7 +1737,7 @@ jobs:
         with:
           name: "deepspeech-${{ matrix.build-flavor }}.tgz"
           path: ${{ github.workspace }}/native_client/javascript/deepspeech-*.tgz
-  test-nodejs_all-Linux:
+  #test-nodejs_all-Linux:
     name: "Lin|Test MultiArchPlatform NodeJS bindings"
     runs-on: ubuntu-20.04
     needs: [repackage-nodejs-allplatforms, train-test-model-Linux]
@@ -1793,7 +1793,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-electronjs_all-Linux:
+  #test-electronjs_all-Linux:
     name: "Lin|Test MultiArchPlatform ElectronJS bindings"
     runs-on: ubuntu-20.04
     needs: [repackage-nodejs-allplatforms, train-test-model-Linux]
@@ -1849,7 +1849,7 @@ jobs:
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
         timeout-minutes: 5
-  test-nodejs_all-macOS:
+  #test-nodejs_all-macOS:
     name: "Mac|Test MultiArchPlatform NodeJS bindings"
     runs-on: macos-10.15
     needs: [ repackage-nodejs-allplatforms, train-test-model-macOS ]
@@ -1903,7 +1903,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-electronjs_all-macOS:
+  #test-electronjs_all-macOS:
     name: "Mac|Test MultiArchPlatform ElectronJS bindings"
     runs-on: macos-10.15
     needs: [ repackage-nodejs-allplatforms, train-test-model-macOS ]
@@ -1957,7 +1957,7 @@ jobs:
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
         timeout-minutes: 5
-  test-nodejs_all-Windows:
+  #test-nodejs_all-Windows:
     name: "Win|Test MultiArchPlatform NodeJS bindings"
     runs-on: windows-2019
     needs: [repackage-nodejs-allplatforms, train-test-model-Linux]
@@ -2023,7 +2023,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-electronjs_all-Windows:
+  #test-electronjs_all-Windows:
     name: "Win|Test MultiArchPlatform ElectronJS bindings"
     runs-on: windows-2019
     needs: [repackage-nodejs-allplatforms, train-test-model-Linux]
@@ -2092,7 +2092,7 @@ jobs:
           model-kind: ${{ matrix.models }}
         timeout-minutes: 5
   # Linux Armv7 and Aarch64 jobs
-  tensorflow_opt-LinuxArmv7:
+  #tensorflow_opt-LinuxArmv7:
     name: "LinArmv7|Check TensorFlow cache"
     runs-on: ubuntu-20.04
     outputs:
@@ -2113,7 +2113,7 @@ jobs:
         uses: ./.github/actions/check_artifact_exists
         with:
           name: ${{ steps.get_cache_key.outputs.key }}
-  tensorflow_opt-LinuxAarch64:
+  #tensorflow_opt-LinuxAarch64:
     name: "LinAarch64|Check TensorFlow cache"
     runs-on: ubuntu-20.04
     outputs:
@@ -2134,7 +2134,7 @@ jobs:
         uses: ./.github/actions/check_artifact_exists
         with:
           name: ${{ steps.get_cache_key.outputs.key }}
-  build-tensorflow-LinuxArmv7:
+  #build-tensorflow-LinuxArmv7:
     name: "LinArmv7|Build TensorFlow (opt)"
     needs: tensorflow_opt-LinuxArmv7
     runs-on: ubuntu-20.04
@@ -2162,7 +2162,7 @@ jobs:
           name: ${{ needs.tensorflow_opt-LinuxArmv7.outputs.cache_key }}
           path: ${{ github.workspace }}/artifacts/home.tar.xz
         if: needs.tensorflow_opt-LinuxArmv7.outputs.status == 'missing'
-  build-tensorflow-LinuxAarch64:
+  #build-tensorflow-LinuxAarch64:
     name: "LinAarch64|Build TensorFlow (opt)"
     needs: tensorflow_opt-LinuxAarch64
     runs-on: ubuntu-20.04
@@ -2190,7 +2190,7 @@ jobs:
           name: ${{ needs.tensorflow_opt-LinuxAarch64.outputs.cache_key }}
           path: ${{ github.workspace }}/artifacts/home.tar.xz
         if: needs.tensorflow_opt-LinuxAarch64.outputs.status == 'missing'
-  build-lib_LinuxArmv7:
+  #build-lib_LinuxArmv7:
     name: "LinArmv7|Build libdeepspeech+client"
     runs-on: ubuntu-20.04
     strategy:
@@ -2238,7 +2238,7 @@ jobs:
         with:
           name: "libdeepspeech.${{ matrix.build-flavor }}.linux.${{ matrix.arch }}.zip"
           path: ${{ github.workspace }}/artifacts/libdeepspeech.zip
-  build-lib_LinuxAarch64:
+  #build-lib_LinuxAarch64:
     name: "LinAarch64|Build libdeepspeech+client"
     runs-on: ubuntu-20.04
     strategy:
@@ -2286,7 +2286,7 @@ jobs:
         with:
           name: "libdeepspeech.${{ matrix.build-flavor }}.linux.${{ matrix.arch }}.zip"
           path: ${{ github.workspace }}/artifacts/libdeepspeech.zip
-  build-python-LinuxArmv7:
+  #build-python-LinuxArmv7:
     name: "LinArmv7|Build python bindings"
     runs-on: ubuntu-20.04
     needs: [ build-lib_LinuxArmv7, swig_Linux, tensorflow_opt-LinuxArmv7 ]
@@ -2360,7 +2360,7 @@ jobs:
         with:
           name: "deepspeech-${{ matrix.build-flavor }}-${{ matrix.python-version }}-${{ matrix.arch }}.whl"
           path: ${{ github.workspace }}/wheels/*.whl
-  build-nodejs-LinuxArmv7:
+  #build-nodejs-LinuxArmv7:
     name: "LinArmv7|Build NodeJS and ElectronJS"
     runs-on: ubuntu-20.04
     needs: [ build-lib_LinuxArmv7, swig_Linux, tensorflow_opt-LinuxArmv7 ]
@@ -2441,7 +2441,7 @@ jobs:
         with:
           name: "deepspeech_intermediate-${{ matrix.build-flavor }}-${{ matrix.arch }}.tgz"
           path: ${{ github.workspace }}/native_client/javascript/deepspeech-*.tgz
-  build-python-LinuxAarch64:
+  #build-python-LinuxAarch64:
     name: "LinAarch64|Build python bindings"
     runs-on: ubuntu-20.04
     needs: [ build-lib_LinuxAarch64, swig_Linux, tensorflow_opt-LinuxAarch64 ]
@@ -2517,7 +2517,7 @@ jobs:
         with:
           name: "deepspeech-${{ matrix.build-flavor }}-${{ matrix.python-version }}-${{ matrix.arch }}.whl"
           path: ${{ github.workspace }}/wheels/*.whl
-  build-nodejs-LinuxAarch64:
+  #build-nodejs-LinuxAarch64:
     name: "LinAarch64|Build NodeJS and ElectronJS"
     runs-on: ubuntu-20.04
     needs: [ build-lib_LinuxAarch64, swig_Linux, tensorflow_opt-LinuxAarch64 ]
@@ -2598,7 +2598,7 @@ jobs:
         with:
           name: "deepspeech_intermediate-${{ matrix.build-flavor }}-${{ matrix.arch }}.tgz"
           path: ${{ github.workspace }}/native_client/javascript/deepspeech-*.tgz
-  build-test-chroot:
+  #build-test-chroot:
     name: "Lin|Build test chroot"
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'pull_request' }}
@@ -2625,7 +2625,7 @@ jobs:
         with:
           name: chroot-${{ matrix.arch }}
           path: ${{ github.workspace }}/chroot.tar.xz
-  test-cpp-LinuxArm:
+  #test-cpp-LinuxArm:
     name: "LinArm*|Test C++ binary"
     runs-on: ubuntu-20.04
     needs: [ build-lib_LinuxArmv7, build-lib_LinuxAarch64, train-test-model-Linux, build-test-chroot ]
@@ -2688,7 +2688,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-py-LinuxArm:
+  #test-py-LinuxArm:
     name: "LinArm*|Test Python bindings"
     runs-on: ubuntu-20.04
     needs: [ build-python-LinuxArmv7, build-python-LinuxAarch64, train-test-model-Linux, build-test-chroot ]
@@ -2752,7 +2752,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-nodejs-LinuxArm:
+  #test-nodejs-LinuxArm:
     name: "LinArm*|Test NodeJS bindings"
     runs-on: ubuntu-20.04
     needs: [ build-nodejs-LinuxArmv7, build-nodejs-LinuxAarch64, train-test-model-Linux, build-test-chroot ]
@@ -2818,7 +2818,7 @@ jobs:
           build-flavor: ${{ matrix.build-flavor }}
           bitrate: ${{ matrix.bitrate }}
           model-kind: ${{ matrix.models }}
-  test-electronjs-LinuxArm:
+  #test-electronjs-LinuxArm:
     name: "LinArm*|Test ElectronJS bindings"
     runs-on: ubuntu-20.04
     needs: [ build-nodejs-LinuxArmv7, build-nodejs-LinuxAarch64, train-test-model-Linux, build-test-chroot ]
