@@ -1,0 +1,67 @@
+name: "Builds windows tf"
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+env:
+  # Shared variables
+  CI_TASK_DIR: ${{ github.workspace }}
+  CI_ARTIFACTS_DIR: ${{ github.workspace }}/artifacts
+
+  # macOS specific
+  MACOSX_DEPLOYMENT_TARGET: "10.10"
+  CI_NODE_MODULES_NTH: 1
+
+  # Windows specific
+  CI_MSYS_VERSION: MSYS_NT-10.0-17763
+  MSYS2_SHELL_PATH: D:\a\_temp\msys\msys64\usr\bin
+defaults:
+  run:
+    shell: bash
+jobs:
+  build-tensorflow-Windows:
+    name: "Win|Build TensorFlow (opt)"
+    needs: tensorflow_opt-Windows
+    runs-on: windows-2019
+    steps:
+      - run: true
+        if: needs.tensorflow_opt-Windows.outputs.status == 'found'
+      - uses: mozilla/setup-msys2@v2
+        with:
+          msystem: MSYS
+          path-type: inherit
+          update: true
+          install: >-
+            git
+            patch
+            tar
+            unzip
+            zip
+        if: needs.tensorflow_opt-Windows.outputs.status == 'missing'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7.9
+        if: needs.tensorflow_opt-Windows.outputs.status == 'missing'
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
+        if: needs.tensorflow_opt-Windows.outputs.status == 'missing'
+      # It's important that this PATH change only happens *after* the checkout
+      # above, because otherwise the checkout fails when persisisting the
+      # credentials for submodules due to using MSYS2 Git
+      - name: Switch git-bash shell to MSYS2 shell by adding MSYS2 path to PATH front
+        run: echo "$MSYS2_SHELL_PATH" >> $GITHUB_PATH
+        if: needs.tensorflow_opt-Windows.outputs.status == 'missing'
+      - run: ./ci_scripts/tf-setup.sh
+        if: needs.tensorflow_opt-Windows.outputs.status == 'missing'
+      - run: ./ci_scripts/tf-build.sh "--windows-cpu"
+        if: needs.tensorflow_opt-Windows.outputs.status == 'missing'
+      - run: ./ci_scripts/tf-package.sh
+        if: needs.tensorflow_opt-Windows.outputs.status == 'missing'
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ needs.tensorflow_opt-Windows.outputs.cache_key }}
+          path: ${{ github.workspace }}/artifacts/home.tar.xz
+        if: needs.tensorflow_opt-Windows.outputs.status == 'missing'
