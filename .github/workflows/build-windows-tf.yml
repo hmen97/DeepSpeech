@@ -20,6 +20,24 @@ defaults:
   run:
     shell: bash
 jobs:
+  tensorflow_opt-Windows:
+    name: "Win|Check TensorFlow cache"
+    runs-on: ubuntu-20.04
+    outputs:
+      status: ${{ steps.check_artifact_exists.outputs.status }}
+      cache_key: ${{ steps.get_cache_key.outputs.key }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - id: get_cache_key
+        uses: ./.github/actions/get_cache_key
+        with:
+          extras: "7"
+      - id: check_artifact_exists
+        uses: ./.github/actions/check_artifact_exists
+        with:
+          name: ${{ steps.get_cache_key.outputs.key }}
   build-tensorflow-Windows:
     name: "Win|Build TensorFlow (opt)"
     needs: tensorflow_opt-Windows
